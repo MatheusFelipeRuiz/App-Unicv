@@ -1,4 +1,5 @@
 import 'package:app_unicv/screens/tela_cadastro_aluno.dart';
+import 'package:app_unicv/screens/tela_cadastro_profcoord.dart';
 import 'package:app_unicv/screens/tela_login.dart';
 import 'package:flutter/material.dart';
 
@@ -20,10 +21,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'UniChat',
-      initialRoute: '/', // Rota inicial
+      initialRoute: '/cadastrar-professor-coordenador', // Rota inicial
       routes: {
         '/': (context) => TelaLogin(),
         '/cadastro-aluno': (context) => const TelaCadastroAluno(),
+        '/cadastrar-professor-coordenador': (context) =>
+            const TelaCadastroProfCor(),
       },
     );
   }
