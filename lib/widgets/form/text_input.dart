@@ -49,16 +49,21 @@ class _TextInputState extends State<TextInput> {
           height: 8,
         ),
         TextFormField(
+          cursorColor: AppColors.black,
           controller: widget.controller,
           keyboardType: widget.tipoTeclado,
           obscureText: _obscureText,
           validator: (value) => widget.validator?.call(value),
           onSaved: (value) => widget.onSaved?.call(),
           decoration: InputDecoration(
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-              Radius.zero,
-            )),
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.black,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.zero,
+              ),
+            ),
             filled: true,
             fillColor: AppColors.white,
             contentPadding: const EdgeInsets.symmetric(
@@ -72,10 +77,14 @@ class _TextInputState extends State<TextInput> {
                       });
                     },
                     child: _obscureText
-                        ? const Icon(Icons.visibility,
-                            color: Color.fromARGB(255, 176, 176, 176))
-                        : const Icon(Icons.visibility_off,
-                            color: Color.fromARGB(255, 176, 176, 176)),
+                        ? const Icon(
+                            Icons.visibility,
+                            color: AppColors.mainYellow,
+                          )
+                        : const Icon(
+                            Icons.visibility_off,
+                            color: AppColors.mainYellow,
+                          ),
                   )
                 : null,
           ),

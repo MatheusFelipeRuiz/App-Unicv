@@ -7,6 +7,7 @@ import 'package:app_unicv/widgets/form/dropdown.dart';
 import 'package:app_unicv/widgets/form/text_input.dart';
 import 'package:app_unicv/widgets/space.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class TelaCadastroAluno extends StatefulWidget {
   const TelaCadastroAluno({super.key});
@@ -38,7 +39,6 @@ class _TelaCadastroAlunoState extends State<TelaCadastroAluno> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Cadastro de Aluno',
-      debugShowCheckedModeBanner: false,
       home: Scaffold(
           body: Container(
         padding: const EdgeInsets.all(10),
