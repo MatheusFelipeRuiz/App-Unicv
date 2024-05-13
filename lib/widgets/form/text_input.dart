@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 class TextInput extends StatefulWidget {
   final String label;
   final TextEditingController controller;
+  final int maxLinhas;
   final TextInputType tipoTeclado;
   final bool inputSenha;
   final Function(String?)? validator;
@@ -17,6 +18,7 @@ class TextInput extends StatefulWidget {
       this.tipoTeclado = TextInputType.text,
       this.inputSenha = false,
       this.validator,
+      this.maxLinhas = 1,
       this.onSaved});
 
   @override
@@ -49,6 +51,7 @@ class _TextInputState extends State<TextInput> {
           height: 8,
         ),
         TextFormField(
+          maxLines: widget.maxLinhas,
           cursorColor: AppColors.black,
           controller: widget.controller,
           keyboardType: widget.tipoTeclado,

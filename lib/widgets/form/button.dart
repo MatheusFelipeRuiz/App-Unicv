@@ -11,8 +11,8 @@ class MainButton extends StatelessWidget {
         top: 20,
         bottom: 20,
       ),
-      backgroundColor: const Color.fromARGB(255, 89, 107, 49),
-      foregroundColor: Colors.white,
+      backgroundColor: AppColors.green,
+      foregroundColor: AppColors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)));
 
   MainButton({super.key, required this.label, required this.onPressed});

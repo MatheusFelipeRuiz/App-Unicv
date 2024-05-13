@@ -51,61 +51,63 @@ class _TelaCadastroAlunoState extends State<TelaCadastroAluno> {
               child: Image.asset('img/logo-unicv.png'),
             ),
             const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-            Form(
-              key: _keyForm,
-              child: Column(
-                children: [
-                  Dropdown(
-                    label: 'Designação',
-                    items: designacoes,
-                    validator: (value) =>
-                        DropdownValidator.validate(value, 'Designação'),
-                  ),
-                  const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-                  Dropdown(
-                    label: 'Curso',
-                    items: cursos,
-                    validator: (value) =>
-                        DropdownValidator.validate(value, 'Curso'),
-                  ),
-                  const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-                  Dropdown(
-                    label: 'Turma',
-                    items: turmas,
-                    validator: (value) =>
-                        DropdownValidator.validate(value, 'Turma'),
-                  ),
-                  const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-                  TextInput(
-                    label: 'Nome',
-                    controller: _nomeController,
-                    validator: (value) =>
-                        TextValidator.validate(value, minLength: 3),
-                  ),
-                  const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-                  TextInput(
-                    label: 'E-mail',
-                    controller: _emailController,
-                    tipoTeclado: TextInputType.emailAddress,
-                    validator: (value) => EmailValidator.validate(value),
-                  ),
-                  const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-                  TextInput(
-                    label: 'Senha',
-                    controller: TextEditingController(),
-                    tipoTeclado: TextInputType.visiblePassword,
-                    validator: (value) => PasswordValidator.validate(value),
-                    inputSenha: true,
-                  ),
-                  const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-                  MainButton(
-                      label: 'Cadastrar',
-                      onPressed: () {
-                        if (!_keyForm.currentState!.validate()) {
-                          return;
-                        }
-                      }),
-                ],
+            Container(
+              child: Form(
+                key: _keyForm,
+                child: Column(
+                  children: [
+                    Dropdown(
+                      label: 'Designação',
+                      items: designacoes,
+                      validator: (value) =>
+                          DropdownValidator.validate(value, 'Designação'),
+                    ),
+                    const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+                    Dropdown(
+                      label: 'Curso',
+                      items: cursos,
+                      validator: (value) =>
+                          DropdownValidator.validate(value, 'Curso'),
+                    ),
+                    const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+                    Dropdown(
+                      label: 'Turma',
+                      items: turmas,
+                      validator: (value) =>
+                          DropdownValidator.validate(value, 'Turma'),
+                    ),
+                    const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+                    TextInput(
+                      label: 'Nome',
+                      controller: _nomeController,
+                      validator: (value) =>
+                          TextValidator.validate(value, minLength: 3),
+                    ),
+                    const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+                    TextInput(
+                      label: 'E-mail',
+                      controller: _emailController,
+                      tipoTeclado: TextInputType.emailAddress,
+                      validator: (value) => EmailValidator.validate(value),
+                    ),
+                    const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+                    TextInput(
+                      label: 'Senha',
+                      controller: TextEditingController(),
+                      tipoTeclado: TextInputType.visiblePassword,
+                      validator: (value) => PasswordValidator.validate(value),
+                      inputSenha: true,
+                    ),
+                    const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+                    MainButton(
+                        label: 'Cadastrar',
+                        onPressed: () {
+                          if (!_keyForm.currentState!.validate()) {
+                            return;
+                          }
+                        }),
+                  ],
+                ),
               ),
             ),
             const SpaceWidget(spaceWidth: 0, spaceHeight: 14),
