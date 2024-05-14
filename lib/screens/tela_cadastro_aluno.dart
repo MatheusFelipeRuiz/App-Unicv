@@ -38,6 +38,7 @@ class _TelaCadastroAlunoState extends State<TelaCadastroAluno> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Cadastro de Aluno',
       home: Scaffold(
           body: Container(

@@ -11,7 +11,7 @@ class BackNavigator extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.green),
+            border: Border.all(color: AppColors.green),
             borderRadius: BorderRadius.circular(30),
           ),
           child: IconButton(
