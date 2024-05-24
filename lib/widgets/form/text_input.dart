@@ -59,6 +59,11 @@ class _TextInputState extends State<TextInput> {
           validator: (value) => widget.validator?.call(value),
           onSaved: (value) => widget.onSaved?.call(),
           decoration: InputDecoration(
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.black,
+              ),
+            ),
             border: const OutlineInputBorder(
               borderSide: BorderSide(
                 color: AppColors.black,

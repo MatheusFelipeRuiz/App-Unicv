@@ -52,6 +52,10 @@ class _DropdownState extends State<Dropdown> {
             color: AppColors.mainYellow,
           ),
           decoration: const InputDecoration(
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+              color: AppColors.black,
+            )),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.zero,
             ),
