@@ -1,14 +1,15 @@
-import 'package:app_unicv/models/aluno.dart';
+import 'package:app_unicv/models/academico.dart';
 import 'package:app_unicv/models/curso.dart';
 import 'package:app_unicv/models/designacao.dart';
 import 'package:app_unicv/models/turma.dart';
 import 'package:app_unicv/screens/tela_home_aluno.dart';
-import 'package:app_unicv/services/aluno_service.dart';
+import 'package:app_unicv/services/academico_service.dart';
 import 'package:app_unicv/services/curso_service.dart';
 import 'package:app_unicv/services/designacao_service.dart';
 import 'package:app_unicv/services/turma_service.dart';
 import 'package:app_unicv/utils/validators/dropdown.dart';
 import 'package:app_unicv/utils/validators/email.dart';
+import 'package:app_unicv/utils/validators/number.dart';
 import 'package:app_unicv/utils/validators/password.dart';
 import 'package:app_unicv/utils/validators/text.dart';
 import 'package:app_unicv/widgets/form/button.dart';
@@ -16,22 +17,25 @@ import 'package:app_unicv/widgets/form/dropdown.dart';
 import 'package:app_unicv/widgets/form/text_input.dart';
 import 'package:app_unicv/widgets/space.dart';
 import 'package:app_unicv/widgets/spinner.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class TelaCadastroAluno extends StatefulWidget {
-  const TelaCadastroAluno({super.key});
+class TelaCadastroAcademico extends StatefulWidget {
+  const TelaCadastroAcademico({super.key});
 
   @override
-  State<TelaCadastroAluno> createState() => _TelaCadastroAlunoState();
+  State<TelaCadastroAcademico> createState() => _TelaCadastroAcademicoState();
 }
 
-class _TelaCadastroAlunoState extends State<TelaCadastroAluno> {
+class _TelaCadastroAcademicoState extends State<TelaCadastroAcademico> {
   final _keyForm = GlobalKey<FormState>();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _nomeController = TextEditingController();
   TextEditingController _senhaController = TextEditingController();
+  TextEditingController _codigoController = TextEditingController();
+
+  bool _isAluno = true;
   bool _isLoading = false;
+  String _titulo = 'Cadastro de Aluno';
   String? _designacao;
   String? _curso;
   String? _turma;
@@ -39,14 +43,29 @@ class _TelaCadastroAlunoState extends State<TelaCadastroAluno> {
   List<Curso> _cursos = [];
   List<Turma> _turmas = [];
 
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
   @override
   void initState() {
     super.initState();
     _loadDesignacoes();
     _loadCursos();
     _loadTurmas();
+  }
+
+  void _definirLayouts() {
+    switch (_designacao) {
+      case 'Aluno':
+        _titulo = 'Cadastro de Aluno';
+        _isAluno = true;
+        break;
+      case 'Professor':
+        _titulo = 'Cadastro de Professor';
+        _isAluno = false;
+        break;
+      case 'Coordenador':
+        _titulo = 'Cadastro de Coordenador';
+        _isAluno = false;
+        break;
+    }
   }
 
   Future<void> _loadDesignacoes() async {
@@ -93,6 +112,9 @@ class _TelaCadastroAlunoState extends State<TelaCadastroAluno> {
     String email = _emailController.text;
     String senha = _senhaController.text;
     String nome = _nomeController.text;
+    int codigo = _codigoController.text.isNotEmpty && !_isAluno
+        ? int.parse(_codigoController.text)
+        : 0;
 
     if (!_keyForm.currentState!.validate()) {
       return;
@@ -102,17 +124,18 @@ class _TelaCadastroAlunoState extends State<TelaCadastroAluno> {
       _isLoading = true;
     });
 
-    Aluno aluno = Aluno(
+    Academico academico = Academico(
       designacao: _designacao!,
       curso: _curso!,
       turma: _turma!,
+      codigo: codigo,
       nome: nome,
       email: email,
       senha: senha,
     );
 
-    AlunoService alunoService = AlunoService();
-    alunoService.cadastrarAluno(aluno);
+    AcademicoService academicoService = AcademicoService();
+    academicoService.cadastrarAcademico(academico);
 
     Navigator.pushReplacement(
       context,
@@ -126,7 +149,7 @@ class _TelaCadastroAlunoState extends State<TelaCadastroAluno> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Cadastro de Aluno',
+      title: _titulo,
       home: Scaffold(
           body: Container(
         padding: const EdgeInsets.all(10),
@@ -149,6 +172,7 @@ class _TelaCadastroAlunoState extends State<TelaCadastroAluno> {
                       onChanged: (String? value) {
                         setState(() {
                           _designacao = value;
+                          _definirLayouts();
                         });
                       },
                       label: 'Designação',
@@ -158,6 +182,15 @@ class _TelaCadastroAlunoState extends State<TelaCadastroAluno> {
                       validator: (value) =>
                           DropdownValidator.validate(value, 'Designação'),
                     ),
+                    if (!_isAluno) ...{
+                      const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+                      TextInput(
+                        label: 'Código',
+                        controller: _codigoController,
+                        tipoTeclado: TextInputType.number,
+                        validator: (value) => NumberValidate.validate(value),
+                      ),
+                    },
                     const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
                     Dropdown(
                       value: _curso,

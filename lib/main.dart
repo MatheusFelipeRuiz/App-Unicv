@@ -1,7 +1,6 @@
-import 'package:app_unicv/screens/tela_cadastro_aluno.dart';
+import 'package:app_unicv/screens/tela_cadastro_academico.dart';
 import 'package:app_unicv/screens/tela_cadastro_aviso.dart';
 import 'package:app_unicv/screens/tela_cadastro_curso.dart';
-import 'package:app_unicv/screens/tela_cadastro_profcoord.dart';
 import 'package:app_unicv/screens/tela_cadastro_turma.dart';
 import 'package:app_unicv/screens/tela_home_aluno.dart';
 import 'package:app_unicv/screens/tela_home_coordenador.dart';
@@ -27,11 +26,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'UniChat',
-      initialRoute: '/',
+      initialRoute: '/cadastro-academico',
       routes: {
         '/': (context) => const TelaLogin(),
-        '/cadastro-aluno': (context) => const TelaCadastroAluno(),
-        '/cadastrar-prof-coord': (context) => const TelaCadastroProfCor(),
+        '/cadastro-academico': (context) => const TelaCadastroAcademico(),
         '/cadastro-aviso': (context) => const TelaCadastroAviso(),
         '/cadastro-curso': (context) => const TelaCadastroCurso(),
         '/cadastro-turma': (context) => const TelaCadastroTurma(),

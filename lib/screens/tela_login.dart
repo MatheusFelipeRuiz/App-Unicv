@@ -1,5 +1,5 @@
 import 'package:app_unicv/common/colors.dart';
-import 'package:app_unicv/screens/tela_cadastro_aluno.dart';
+import 'package:app_unicv/screens/tela_cadastro_academico.dart';
 import 'package:app_unicv/screens/tela_home_aluno.dart';
 import 'package:app_unicv/services/auth/autentificacao.dart';
 import 'package:app_unicv/utils/validators/email.dart';

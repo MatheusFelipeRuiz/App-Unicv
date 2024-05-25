@@ -1,13 +1,14 @@
-class Aluno {
+class Academico {
   String? id;
   String nome;
   String email;
   String senha;
+  int codigo;
   String designacao;
   String curso;
   String turma;
 
-  Aluno({
+  Academico({
     this.id,
     required this.designacao,
     required this.curso,
@@ -15,6 +16,7 @@ class Aluno {
     required this.turma,
     required this.email,
     required this.senha,
+    required this.codigo,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,18 +27,20 @@ class Aluno {
       'designacao': designacao,
       'curso': curso,
       'turma': turma,
+      'codigo': codigo,
     };
   }
 
-  factory Aluno.fromMap(Map<String, dynamic> map) {
-    return Aluno(
+  factory Academico.fromMap(Map<String, dynamic> map) {
+    return Academico(
       id: map['id'],
       designacao: map['designacao'],
       curso: map['curso'],
       turma: map['turma'],
       nome: map['nome'],
       email: map['email'],
-      senha: '', // A senha não deve ser armazenada diretamente
+      senha: '',
+      codigo: map['codigo'],
     );
   }
 }
