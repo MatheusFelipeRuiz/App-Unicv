@@ -27,7 +27,9 @@ class _DropdownState extends State<Dropdown> {
   @override
   void initState() {
     super.initState();
-    _selectedItem = widget.value ?? widget.items.first;
+    if (widget.items.isNotEmpty) {
+      _selectedItem = widget.value ?? widget.items.first;
+    }
   }
 
   @override
@@ -64,8 +66,8 @@ class _DropdownState extends State<Dropdown> {
             ),
           ),
           isExpanded: true,
-          value: _selectedItem,
-          // validator: (value) => widget.validator?.call(value),
+          value: widget.value,
+          validator: (value) => widget.validator?.call(value),
           onChanged: (newValue) {
             setState(() {
               _selectedItem = newValue!;
