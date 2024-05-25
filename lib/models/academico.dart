@@ -1,29 +1,28 @@
 class Academico {
   String? id;
-  String nome;
+  String? nome;
   String email;
   String senha;
-  int codigo;
-  String designacao;
-  String curso;
-  String turma;
+  int? codigo;
+  String? designacao;
+  String? curso;
+  String? turma;
 
   Academico({
     this.id,
-    required this.designacao,
-    required this.curso,
-    required this.nome,
-    required this.turma,
+    this.designacao,
+    this.curso,
+    this.nome,
+    this.turma,
     required this.email,
     required this.senha,
-    required this.codigo,
+    this.codigo,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'nome': nome,
       'email': email,
-      'senha': senha,
       'designacao': designacao,
       'curso': curso,
       'turma': turma,

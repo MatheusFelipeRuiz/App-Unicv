@@ -1,7 +1,8 @@
-import 'package:app_unicv/common/colors.dart';
-import 'package:app_unicv/screens/tela_cadastro_academico.dart';
+import 'package:app_unicv/models/academico.dart';
 import 'package:app_unicv/screens/tela_home_aluno.dart';
-import 'package:app_unicv/services/auth/autentificacao.dart';
+import 'package:app_unicv/services/academico_service.dart';
+import 'package:app_unicv/utils/error_message.dart';
+import 'package:app_unicv/utils/snackbar.dart';
 import 'package:app_unicv/utils/validators/email.dart';
 import 'package:app_unicv/utils/validators/password.dart';
 import 'package:app_unicv/widgets/form/button.dart';
@@ -10,7 +11,6 @@ import 'package:app_unicv/widgets/space.dart';
 import 'package:app_unicv/widgets/spinner.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:app_unicv/core/snackbar.dart';
 
 class TelaLogin extends StatefulWidget {
   const TelaLogin({super.key});
@@ -21,11 +21,9 @@ class TelaLogin extends StatefulWidget {
 
 class _TelaLoginState extends State<TelaLogin> {
   final _chaveForm = GlobalKey<FormState>();
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   TextEditingController _emailController = TextEditingController();
   TextEditingController _senhaController = TextEditingController();
-  AutentificacaoServico _authServico = AutentificacaoServico();
   bool _isLoading = false;
 
   void _logar() async {
@@ -37,53 +35,31 @@ class _TelaLoginState extends State<TelaLogin> {
       _isLoading = true;
     });
 
-    String email = _emailController.text.trim();
-    String senha = _senhaController.text.trim();
-    String _errorMessage = '';
+    Academico academico = Academico(
+      email: _emailController.text.trim(),
+      senha: _senhaController.text.trim(),
+    );
 
     try {
-      UserCredential userCredential =
-          await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: senha,
-      );
+      AcademicoService academicoService = AcademicoService();
+      bool logadoComSucesso = await academicoService.logar(academico);
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const TelaHomeAluno(),
-        ),
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'invalid-credential') {
-        _errorMessage =
-            'Credencial inválida. Por favor, verifique seus dados de login.';
-      } else if (e.code == 'user-not-found') {
-        _errorMessage =
-            'Usuário não encontrado. Por favor, verifique seus dados de login.';
-      } else if (e.code == 'wrong-password') {
-        _errorMessage = 'Senha incorreta. Por favor, tente novamente.';
-      } else {
-        _errorMessage = 'Ocorreu um erro: ${e.message}';
+      if (logadoComSucesso) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const TelaHomeAluno(),
+          ),
+        );
       }
-      print('Erro: $_errorMessage');
-      _showErrorSnackbar(_errorMessage);
-    } catch (e) {
-      _showErrorSnackbar(
-          'Ocorreu um erro inesperado. Por favor, tente novamente.');
+    } on FirebaseAuthException catch (e) {
+      SnackBarMessage.showErrorSnackbar(
+          context, ErrorMessage.definirMensagemErro(e.code));
     } finally {
       setState(() {
         _isLoading = false;
       });
     }
-  }
-
-  void _showErrorSnackbar(String message) {
-    final snackBar = SnackBar(
-      content: Text(message),
-      backgroundColor: Colors.red,
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override

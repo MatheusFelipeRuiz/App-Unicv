@@ -7,6 +7,8 @@ import 'package:app_unicv/services/academico_service.dart';
 import 'package:app_unicv/services/curso_service.dart';
 import 'package:app_unicv/services/designacao_service.dart';
 import 'package:app_unicv/services/turma_service.dart';
+import 'package:app_unicv/utils/error_message.dart';
+import 'package:app_unicv/utils/snackbar.dart';
 import 'package:app_unicv/utils/validators/dropdown.dart';
 import 'package:app_unicv/utils/validators/email.dart';
 import 'package:app_unicv/utils/validators/number.dart';
@@ -17,6 +19,7 @@ import 'package:app_unicv/widgets/form/dropdown.dart';
 import 'package:app_unicv/widgets/form/text_input.dart';
 import 'package:app_unicv/widgets/space.dart';
 import 'package:app_unicv/widgets/spinner.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class TelaCadastroAcademico extends StatefulWidget {
@@ -35,7 +38,6 @@ class _TelaCadastroAcademicoState extends State<TelaCadastroAcademico> {
 
   bool _isAluno = true;
   bool _isLoading = false;
-  String _titulo = 'Cadastro de Aluno';
   String? _designacao;
   String? _curso;
   String? _turma;
@@ -54,15 +56,12 @@ class _TelaCadastroAcademicoState extends State<TelaCadastroAcademico> {
   void _definirLayouts() {
     switch (_designacao) {
       case 'Aluno':
-        _titulo = 'Cadastro de Aluno';
         _isAluno = true;
         break;
       case 'Professor':
-        _titulo = 'Cadastro de Professor';
         _isAluno = false;
         break;
       case 'Coordenador':
-        _titulo = 'Cadastro de Coordenador';
         _isAluno = false;
         break;
     }
@@ -134,124 +133,135 @@ class _TelaCadastroAcademicoState extends State<TelaCadastroAcademico> {
       senha: senha,
     );
 
-    AcademicoService academicoService = AcademicoService();
-    academicoService.cadastrarAcademico(academico);
+    try {
+      AcademicoService academicoService = AcademicoService();
+      bool cadastradoComSucesso =
+          await academicoService.cadastrarAcademico(academico);
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const TelaHomeAluno(),
-      ),
-    );
+      if (cadastradoComSucesso) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const TelaHomeAluno(),
+          ),
+        );
+      }
+    } on FirebaseException catch (e) {
+      SnackBarMessage.showErrorSnackbar(
+          context, ErrorMessage.definirMensagemErro(e.code));
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: _titulo,
-      home: Scaffold(
-          body: Container(
-        padding: const EdgeInsets.all(10),
-        child: Center(
-            child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(top: 20),
-              width: 200,
-              child: Image.asset('img/logo-unicv.png'),
-            ),
-            const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-            Container(
-              child: Form(
-                key: _keyForm,
-                child: Column(
-                  children: [
-                    Dropdown(
-                      value: _designacao,
-                      onChanged: (String? value) {
-                        setState(() {
-                          _designacao = value;
-                          _definirLayouts();
-                        });
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          child: Center(
+              child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                width: 200,
+                child: Image.asset('img/logo-unicv.png'),
+              ),
+              const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+              Container(
+                child: Form(
+                  key: _keyForm,
+                  child: Column(
+                    children: [
+                      Dropdown(
+                        value: _designacao,
+                        onChanged: (String? value) {
+                          setState(() {
+                            _designacao = value;
+                            _definirLayouts();
+                          });
+                        },
+                        label: 'Designação',
+                        items: _designacoes
+                            .map((designacao) => designacao.designacao)
+                            .toList(),
+                        validator: (value) =>
+                            DropdownValidator.validate(value, 'Designação'),
+                      ),
+                      if (!_isAluno) ...{
+                        const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+                        TextInput(
+                          label: 'Código',
+                          controller: _codigoController,
+                          tipoTeclado: TextInputType.number,
+                          validator: (value) => NumberValidate.validate(value),
+                        ),
                       },
-                      label: 'Designação',
-                      items: _designacoes
-                          .map((designacao) => designacao.designacao)
-                          .toList(),
-                      validator: (value) =>
-                          DropdownValidator.validate(value, 'Designação'),
-                    ),
-                    if (!_isAluno) ...{
+                      const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+                      Dropdown(
+                        value: _curso,
+                        onChanged: (String? value) {
+                          setState(() {
+                            _curso = value;
+                          });
+                        },
+                        label: 'Curso',
+                        items: _cursos.map((curso) => curso.curso).toList(),
+                        validator: (value) =>
+                            DropdownValidator.validate(value, 'Curso'),
+                      ),
+                      const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+                      Dropdown(
+                        value: _turma,
+                        onChanged: (String? value) {
+                          _turma = value;
+                        },
+                        label: 'Turma',
+                        items: _turmas.map((turma) => turma.turma).toList(),
+                        validator: (value) =>
+                            DropdownValidator.validate(value, 'Turma'),
+                      ),
                       const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
                       TextInput(
-                        label: 'Código',
-                        controller: _codigoController,
-                        tipoTeclado: TextInputType.number,
-                        validator: (value) => NumberValidate.validate(value),
+                        label: 'Nome',
+                        controller: _nomeController,
+                        validator: (value) =>
+                            TextValidator.validate(value, minLength: 3),
                       ),
-                    },
-                    const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-                    Dropdown(
-                      value: _curso,
-                      onChanged: (String? value) {
-                        setState(() {
-                          _curso = value;
-                        });
-                      },
-                      label: 'Curso',
-                      items: _cursos.map((curso) => curso.curso).toList(),
-                      validator: (value) =>
-                          DropdownValidator.validate(value, 'Curso'),
-                    ),
-                    const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-                    Dropdown(
-                      value: _turma,
-                      onChanged: (String? value) {
-                        _turma = value;
-                      },
-                      label: 'Turma',
-                      items: _turmas.map((turma) => turma.turma).toList(),
-                      validator: (value) =>
-                          DropdownValidator.validate(value, 'Turma'),
-                    ),
-                    const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-                    TextInput(
-                      label: 'Nome',
-                      controller: _nomeController,
-                      validator: (value) =>
-                          TextValidator.validate(value, minLength: 3),
-                    ),
-                    const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-                    TextInput(
-                      label: 'E-mail',
-                      controller: _emailController,
-                      tipoTeclado: TextInputType.emailAddress,
-                      validator: (value) => EmailValidator.validate(value),
-                    ),
-                    const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-                    TextInput(
-                      label: 'Senha',
-                      controller: _senhaController,
-                      tipoTeclado: TextInputType.visiblePassword,
-                      validator: (value) => PasswordValidator.validate(value),
-                      inputSenha: true,
-                    ),
-                    const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-                    _isLoading
-                        ? const SpinnerProgressIndicator()
-                        : MainButton(
-                            label: 'Cadastrar',
-                            onPressed: _cadastrar,
-                          )
-                  ],
+                      const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+                      TextInput(
+                        label: 'E-mail',
+                        controller: _emailController,
+                        tipoTeclado: TextInputType.emailAddress,
+                        validator: (value) => EmailValidator.validate(value),
+                      ),
+                      const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+                      TextInput(
+                        label: 'Senha',
+                        controller: _senhaController,
+                        tipoTeclado: TextInputType.visiblePassword,
+                        validator: (value) => PasswordValidator.validate(value),
+                        inputSenha: true,
+                      ),
+                      const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+                      _isLoading
+                          ? const SpinnerProgressIndicator()
+                          : MainButton(
+                              label: 'Cadastrar',
+                              onPressed: _cadastrar,
+                            )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SpaceWidget(spaceWidth: 0, spaceHeight: 14),
-          ],
-        )),
-      )),
+              const SpaceWidget(spaceWidth: 0, spaceHeight: 14),
+            ],
+          )),
+        ),
+      ),
     );
   }
 }

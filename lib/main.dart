@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'UniChat',
-      initialRoute: '/cadastro-academico',
+      initialRoute: '/',
       routes: {
         '/': (context) => const TelaLogin(),
         '/cadastro-academico': (context) => const TelaCadastroAcademico(),
