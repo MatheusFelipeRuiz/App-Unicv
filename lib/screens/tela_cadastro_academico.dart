@@ -161,18 +161,23 @@ class _TelaCadastroAcademicoState extends State<TelaCadastroAcademico> {
           child: Center(
               child: Column(
             children: [
-              BackNavigator(
-                onPressed: () {
-                  NavigationUtil.direcionarPara(
-                    context,
-                    '/',
-                  );
-                },
-              ),
-              Container(
-                padding: const EdgeInsets.only(top: 20),
-                width: 200,
-                child: Image.asset('img/logo-unicv.png'),
+              Row(
+                children: [
+                  BackNavigator(
+                    onPressed: () {
+                      NavigationUtil.direcionarPara(
+                        context,
+                        '/',
+                      );
+                    },
+                  ),
+                  const SpaceWidget(spaceWidth: 50, spaceHeight: 0),
+                  Container(
+                    padding: const EdgeInsets.only(top: 20),
+                    width: 200,
+                    child: Image.asset('img/logo-unicv.png'),
+                  ),
+                ],
               ),
               const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
               Container(

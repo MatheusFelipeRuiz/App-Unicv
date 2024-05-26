@@ -68,90 +68,93 @@ class _TelaLoginState extends State<TelaLogin> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(
-                top: 30,
-                bottom: 20,
-                left: 20,
-                right: 20,
-              ),
-              child: Image.asset(
-                'img/logo-unicv.png',
-                width: 400,
-                height: 100,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Form(
-                key: _chaveForm,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextInput(
-                      label: 'E-mail',
-                      controller: _emailController,
-                      tipoTeclado: TextInputType.emailAddress,
-                      validator: (value) => EmailValidator.validate(value),
-                    ),
-                    TextInput(
-                      label: 'Senha',
-                      controller: _senhaController,
-                      tipoTeclado: TextInputType.visiblePassword,
-                      inputSenha: true,
-                      validator: (value) => PasswordValidator.validate(value),
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Colors.transparent),
-                        elevation: MaterialStateProperty.all(0),
-                      ),
-                      onPressed: () {
-                        NavigationUtil.direcionarPara(context, '/reset-senha');
-                      },
-                      child: const Text(
-                        'Esqueceu sua senha?',
-                        style: TextStyle(color: AppColors.mainYellow),
-                      ),
-                    ),
-                    const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
-                    _isLoading
-                        ? const SpinnerProgressIndicator()
-                        : MainButton(
-                            label: 'Entrar',
-                            onPressed: _logar,
-                          ),
-                    const SpaceWidget(spaceWidth: 0, spaceHeight: 20),
-                    SizedBox(
-                      width: 200,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          NavigationUtil.direcionarPara(
-                              context, '/cadastro-academico');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          textStyle: const TextStyle(
-                            fontSize: 15,
-                          ),
-                          backgroundColor: AppColors.black,
-                          padding: const EdgeInsets.only(top: 5, bottom: 5),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5)),
-                        ),
-                        child: const Text('Cadastrar',
-                            style: TextStyle(
-                                fontSize: 20, color: AppColors.white)),
-                      ),
-                    ),
-                  ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 30,
+                  bottom: 20,
+                  left: 20,
+                  right: 20,
+                ),
+                child: Image.asset(
+                  'img/logo-unicv.png',
+                  width: 400,
+                  height: 100,
                 ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Form(
+                  key: _chaveForm,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextInput(
+                        label: 'E-mail',
+                        controller: _emailController,
+                        tipoTeclado: TextInputType.emailAddress,
+                        validator: (value) => EmailValidator.validate(value),
+                      ),
+                      TextInput(
+                        label: 'Senha',
+                        controller: _senhaController,
+                        tipoTeclado: TextInputType.visiblePassword,
+                        inputSenha: true,
+                        validator: (value) => PasswordValidator.validate(value),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.transparent),
+                          elevation: MaterialStateProperty.all(0),
+                        ),
+                        onPressed: () {
+                          NavigationUtil.direcionarPara(
+                              context, '/reset-senha');
+                        },
+                        child: const Text(
+                          'Esqueceu sua senha?',
+                          style: TextStyle(color: AppColors.mainYellow),
+                        ),
+                      ),
+                      const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
+                      _isLoading
+                          ? const SpinnerProgressIndicator()
+                          : MainButton(
+                              label: 'Entrar',
+                              onPressed: _logar,
+                            ),
+                      const SpaceWidget(spaceWidth: 0, spaceHeight: 20),
+                      SizedBox(
+                        width: 200,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            NavigationUtil.direcionarPara(
+                                context, '/cadastro-academico');
+                          },
+                          style: ElevatedButton.styleFrom(
+                            textStyle: const TextStyle(
+                              fontSize: 15,
+                            ),
+                            backgroundColor: AppColors.black,
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5)),
+                          ),
+                          child: const Text('Cadastrar',
+                              style: TextStyle(
+                                  fontSize: 20, color: AppColors.white)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
