@@ -2,7 +2,6 @@ import 'package:app_unicv/models/academico.dart';
 import 'package:app_unicv/models/curso.dart';
 import 'package:app_unicv/models/designacao.dart';
 import 'package:app_unicv/models/turma.dart';
-import 'package:app_unicv/screens/tela_home_academico.dart';
 import 'package:app_unicv/services/academico_service.dart';
 import 'package:app_unicv/services/curso_service.dart';
 import 'package:app_unicv/services/designacao_service.dart';
@@ -141,14 +140,6 @@ class _TelaCadastroAcademicoState extends State<TelaCadastroAcademico> {
 
       if (cadastradoComSucesso) {
         NavigationUtil.direcionarPara(context, '/home-academico');
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TelaHomeAcademico(
-              designacao: academico.designacao!,
-            ),
-          ),
-        );
       }
     } on FirebaseException catch (e) {
       SnackBarMessage.showErrorSnackbar(

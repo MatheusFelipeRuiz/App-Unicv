@@ -1,3 +1,4 @@
+import 'package:app_unicv/models/academico.dart';
 import 'package:app_unicv/utils/validators/text.dart';
 import 'package:app_unicv/widgets/form/button.dart';
 import 'package:app_unicv/widgets/form/text_input.dart';
@@ -6,10 +7,10 @@ import 'package:app_unicv/widgets/space.dart';
 import 'package:flutter/material.dart';
 
 class TelaCadastroCurso extends StatefulWidget {
-  final String designacao;
+  final Academico academico;
   const TelaCadastroCurso({
     super.key,
-    required this.designacao,
+    required this.academico,
   });
 
   @override
@@ -32,7 +33,7 @@ class _TelaCadastroCursoState extends State<TelaCadastroCurso> {
             child: Column(
               children: [
                 BackNavigator(
-                  designacao: widget.designacao,
+                  academico: widget.academico,
                 ),
                 const SpaceWidget(spaceWidth: 0, spaceHeight: 50),
                 Form(

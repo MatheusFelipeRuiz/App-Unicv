@@ -1,3 +1,4 @@
+import 'package:app_unicv/models/academico.dart';
 import 'package:app_unicv/models/aviso.dart';
 import 'package:app_unicv/models/turma.dart';
 import 'package:app_unicv/screens/tela_home_academico.dart';
@@ -17,10 +18,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class TelaCadastroAviso extends StatefulWidget {
-  final String designacao;
+  final Academico academico;
   const TelaCadastroAviso({
     super.key,
-    required this.designacao,
+    required this.academico,
   });
 
   @override
@@ -56,7 +57,7 @@ class _TelaCadastroAvisoState extends State<TelaCadastroAviso> {
     Aviso aviso = Aviso(
       titulo: titulo,
       descricao: descricao,
-      autor: 'Teste',
+      autor: widget.academico.nome!,
       dataHora: DateTime.now(),
     );
 
@@ -65,15 +66,8 @@ class _TelaCadastroAvisoState extends State<TelaCadastroAviso> {
       bool cadastradoComSucesso = await avisoService.cadastrarAviso(aviso);
 
       if (cadastradoComSucesso) {
-        NavigationUtil.direcionarPara(context, '/home-academico');
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TelaHomeAcademico(
-              designacao: widget.designacao,
-            ),
-          ),
-        );
+        NavigationUtil.direcionarPara(
+            context, '/home-academico', widget.academico);
       }
     } on FirebaseException catch (e) {
       SnackBarMessage.showErrorSnackbar(
@@ -107,7 +101,7 @@ class _TelaCadastroAvisoState extends State<TelaCadastroAviso> {
             child: Column(
               children: [
                 BackNavigator(
-                  designacao: widget.designacao,
+                  academico: widget.academico,
                 ),
                 const SpaceWidget(spaceWidth: 0, spaceHeight: 50),
                 Form(
@@ -137,7 +131,7 @@ class _TelaCadastroAvisoState extends State<TelaCadastroAviso> {
                         label: 'Descrição',
                         controller: _descricaoController,
                         validator: (value) => TextValidator.validate(value,
-                            minLength: 3, maxLength: 100),
+                            minLength: 3, maxLength: 300),
                         maxLinhas: 10,
                       ),
                       const SpaceWidget(spaceWidth: 0, spaceHeight: 20),

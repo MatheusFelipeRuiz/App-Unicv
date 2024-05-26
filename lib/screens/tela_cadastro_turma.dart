@@ -1,3 +1,4 @@
+import 'package:app_unicv/models/academico.dart';
 import 'package:app_unicv/utils/validators/dropdown.dart';
 import 'package:app_unicv/utils/validators/text.dart';
 import 'package:app_unicv/widgets/form/button.dart';
@@ -8,10 +9,10 @@ import 'package:app_unicv/widgets/space.dart';
 import 'package:flutter/material.dart';
 
 class TelaCadastroTurma extends StatefulWidget {
-  final String designacao;
+  final Academico academico;
   const TelaCadastroTurma({
     super.key,
-    required this.designacao,
+    required this.academico,
   });
 
   @override
@@ -45,7 +46,7 @@ class _TelaCadastroTurmaState extends State<TelaCadastroTurma> {
             child: Column(
               children: [
                 BackNavigator(
-                  designacao: widget.designacao,
+                  academico: widget.academico,
                 ),
                 const SpaceWidget(spaceWidth: 0, spaceHeight: 50),
                 Form(

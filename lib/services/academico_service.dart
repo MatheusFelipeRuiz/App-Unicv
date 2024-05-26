@@ -18,6 +18,26 @@ class AcademicoService {
     }
   }
 
+  Future<Academico?> getAcademicoByEmail(String email) async {
+    try {
+      CollectionReference academicosCollection =
+          _firestore.collection('academicos');
+
+      QuerySnapshot querySnapshot = await academicosCollection
+          .where('email', isEqualTo: email)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        DocumentSnapshot doc = querySnapshot.docs.first;
+        return Academico.fromFirestore(
+            doc.data() as Map<String, dynamic>, doc.id);
+      }
+    } catch (e) {
+      print('Erro ao buscar usuário por e-mail: $e');
+    }
+  }
+
   Future<bool> cadastrarAcademico(Academico academico) async {
     try {
       UserCredential userCredential =

@@ -1,7 +1,7 @@
 import 'package:app_unicv/models/academico.dart';
-import 'package:app_unicv/screens/tela_home_academico.dart';
 import 'package:app_unicv/services/academico_service.dart';
 import 'package:app_unicv/utils/error_message.dart';
+import 'package:app_unicv/utils/navigation_helper.dart';
 import 'package:app_unicv/utils/snackbar.dart';
 import 'package:app_unicv/utils/validators/email.dart';
 import 'package:app_unicv/utils/validators/password.dart';
@@ -45,14 +45,11 @@ class _TelaLoginState extends State<TelaLogin> {
       bool logadoComSucesso = await academicoService.logar(academico);
 
       if (logadoComSucesso) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TelaHomeAcademico(
-              designacao: 'Aluno',
-            ),
-          ),
-        );
+        print(academico.email);
+        academico =
+            (await academicoService.getAcademicoByEmail(academico.email))!;
+
+        NavigationUtil.direcionarPara(context, '/home-academico', academico);
       }
     } on FirebaseAuthException catch (e) {
       SnackBarMessage.showErrorSnackbar(

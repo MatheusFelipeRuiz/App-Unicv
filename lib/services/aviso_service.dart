@@ -19,23 +19,6 @@ class AvisoService {
     }
   }
 
-  // Future<bool> cadastrarAcademico(Academico academico) async {
-  //   try {
-  //     UserCredential userCredential =
-  //         await _firebaseAuth.createUserWithEmailAndPassword(
-  //       email: academico.email,
-  //       password: academico.senha,
-  //     );
-
-  //     String uid = userCredential.user!.uid;
-
-  //     await _firestore.collection('academicos').doc(uid).set(academico.toMap());
-  //     return true;
-  //   } on FirebaseException catch (e) {
-  //     throw FirebaseAuthException(code: e.code);
-  //   }
-  // }
-
   Future<bool> cadastrarAviso(Aviso aviso) async {
     try {
       DocumentReference docRef = _firestore.collection('avisos').doc();

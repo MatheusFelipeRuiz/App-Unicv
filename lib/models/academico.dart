@@ -26,20 +26,21 @@ class Academico {
       'designacao': designacao,
       'curso': curso,
       'turma': turma,
-      'codigo': codigo,
+      'codigo': codigo.toString(),
     };
   }
 
-  factory Academico.fromMap(Map<String, dynamic> map) {
+  factory Academico.fromFirestore(
+      Map<String, dynamic> data, String documentId) {
     return Academico(
-      id: map['id'],
-      designacao: map['designacao'],
-      curso: map['curso'],
-      turma: map['turma'],
-      nome: map['nome'],
-      email: map['email'],
+      id: documentId,
+      designacao: data['designacao'],
+      curso: data['curso'],
+      turma: data['turma'],
+      nome: data['nome'],
+      email: data['email'],
       senha: '',
-      codigo: map['codigo'],
+      codigo: int.parse(data['codigo']),
     );
   }
 }
