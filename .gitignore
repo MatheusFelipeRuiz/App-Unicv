@@ -33,7 +33,8 @@ migrate_working_dir/
 /build/
 
 #Firebase
-firebase_keys.json
+firebase.json
+firebase_options.dart
 
 # Symbolication related
 app.*.symbols
