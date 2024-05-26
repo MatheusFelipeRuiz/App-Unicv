@@ -137,6 +137,9 @@ class _TelaHomeAcademicoState extends State<TelaHomeAcademico> {
                           child: CardHome(
                             titulo: _avisos[index].titulo,
                             descricao: _avisos[index].descricao,
+                            autor: _avisos[index].autor,
+                            dataHora: DateFormat('dd/MM/yyyy HH:mm')
+                                .format(_avisos[index].dataHora),
                           ),
                         );
                       },
