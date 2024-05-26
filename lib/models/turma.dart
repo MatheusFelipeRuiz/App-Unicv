@@ -11,6 +11,13 @@ class Turma {
     required this.turma,
   });
 
+  Map<String, dynamic> toMap() {
+    return {
+      'turma': turma,
+      'curso': curso,
+    };
+  }
+
   factory Turma.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return Turma(
