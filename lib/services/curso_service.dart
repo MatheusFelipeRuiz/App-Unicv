@@ -16,4 +16,18 @@ class CursoService {
       return [];
     }
   }
+
+  Future<bool> cadastrarCurso(Curso curso) async {
+    try {
+      DocumentReference docRef = _firestore.collection('cursos').doc();
+
+      curso.id = docRef.id;
+
+      await docRef.set(curso.toMap());
+
+      return true;
+    } on FirebaseException catch (e) {
+      throw FirebaseException(message: e.code, plugin: 'Error');
+    }
+  }
 }

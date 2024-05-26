@@ -11,7 +11,6 @@ class Curso {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'curso': curso,
     };
   }
