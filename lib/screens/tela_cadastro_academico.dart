@@ -139,7 +139,7 @@ class _TelaCadastroAcademicoState extends State<TelaCadastroAcademico> {
           await academicoService.cadastrarAcademico(academico);
 
       if (cadastradoComSucesso) {
-        NavigationUtil.direcionarPara(context, '/home-academico');
+        NavigationUtil.direcionarPara(context, '/home-academico', academico);
       }
     } on FirebaseException catch (e) {
       SnackBarMessage.showErrorSnackbar(

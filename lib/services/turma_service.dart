@@ -17,4 +17,19 @@ class TurmaService {
       return [];
     }
   }
+
+  Future<bool> cadastrarTurma(Turma turma) async {
+    try {
+      DocumentReference docRef = _firestore.collection('turmas').doc();
+
+      turma.id = docRef.id;
+
+      await docRef.set(turma.toMap());
+
+      return true;
+    } on FirebaseException catch (e) {
+      throw FirebaseException(message: e.code, plugin: 'Error');
+    }
+  }
+
 }
