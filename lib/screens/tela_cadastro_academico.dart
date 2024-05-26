@@ -2,12 +2,13 @@ import 'package:app_unicv/models/academico.dart';
 import 'package:app_unicv/models/curso.dart';
 import 'package:app_unicv/models/designacao.dart';
 import 'package:app_unicv/models/turma.dart';
-import 'package:app_unicv/screens/tela_home_aluno.dart';
+import 'package:app_unicv/screens/tela_home_academico.dart';
 import 'package:app_unicv/services/academico_service.dart';
 import 'package:app_unicv/services/curso_service.dart';
 import 'package:app_unicv/services/designacao_service.dart';
 import 'package:app_unicv/services/turma_service.dart';
 import 'package:app_unicv/utils/error_message.dart';
+import 'package:app_unicv/utils/navigation_helper.dart';
 import 'package:app_unicv/utils/snackbar.dart';
 import 'package:app_unicv/utils/validators/dropdown.dart';
 import 'package:app_unicv/utils/validators/email.dart';
@@ -139,10 +140,13 @@ class _TelaCadastroAcademicoState extends State<TelaCadastroAcademico> {
           await academicoService.cadastrarAcademico(academico);
 
       if (cadastradoComSucesso) {
+        NavigationUtil.direcionarPara(context, '/home-academico');
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const TelaHomeAluno(),
+            builder: (context) => TelaHomeAcademico(
+              designacao: academico.designacao!,
+            ),
           ),
         );
       }

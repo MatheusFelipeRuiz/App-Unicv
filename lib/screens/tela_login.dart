@@ -1,5 +1,5 @@
 import 'package:app_unicv/models/academico.dart';
-import 'package:app_unicv/screens/tela_home_aluno.dart';
+import 'package:app_unicv/screens/tela_home_academico.dart';
 import 'package:app_unicv/services/academico_service.dart';
 import 'package:app_unicv/utils/error_message.dart';
 import 'package:app_unicv/utils/snackbar.dart';
@@ -48,7 +48,9 @@ class _TelaLoginState extends State<TelaLogin> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const TelaHomeAluno(),
+            builder: (context) => TelaHomeAcademico(
+              designacao: 'Aluno',
+            ),
           ),
         );
       }

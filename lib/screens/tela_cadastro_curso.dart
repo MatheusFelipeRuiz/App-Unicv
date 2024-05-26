@@ -6,7 +6,11 @@ import 'package:app_unicv/widgets/space.dart';
 import 'package:flutter/material.dart';
 
 class TelaCadastroCurso extends StatefulWidget {
-  const TelaCadastroCurso({super.key});
+  final String designacao;
+  const TelaCadastroCurso({
+    super.key,
+    required this.designacao,
+  });
 
   @override
   State<TelaCadastroCurso> createState() => _TelaCadastroCursoState();
@@ -27,7 +31,9 @@ class _TelaCadastroCursoState extends State<TelaCadastroCurso> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                const BackNavigator(),
+                BackNavigator(
+                  designacao: widget.designacao,
+                ),
                 const SpaceWidget(spaceWidth: 0, spaceHeight: 50),
                 Form(
                   key: _keyForm,

@@ -6,7 +6,11 @@ import 'package:app_unicv/widgets/space.dart';
 import 'package:flutter/material.dart';
 
 class TelaCadastroAviso extends StatefulWidget {
-  const TelaCadastroAviso({super.key});
+  final String designacao;
+  const TelaCadastroAviso({
+    super.key,
+    required this.designacao,
+  });
 
   @override
   State<TelaCadastroAviso> createState() => _TelaCadastroAvisoState();
@@ -14,7 +18,6 @@ class TelaCadastroAviso extends StatefulWidget {
 
 class _TelaCadastroAvisoState extends State<TelaCadastroAviso> {
   final _keyForm = GlobalKey<FormState>();
-
   TextEditingController _turmaController = TextEditingController();
   TextEditingController _tituloController = TextEditingController();
   TextEditingController _descricaoController = TextEditingController();
@@ -29,7 +32,9 @@ class _TelaCadastroAvisoState extends State<TelaCadastroAviso> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                const BackNavigator(),
+                BackNavigator(
+                  designacao: widget.designacao,
+                ),
                 const SpaceWidget(spaceWidth: 0, spaceHeight: 50),
                 Form(
                   key: _keyForm,

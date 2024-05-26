@@ -1,8 +1,14 @@
 import 'package:app_unicv/common/colors.dart';
+import 'package:app_unicv/utils/navigation_helper.dart';
 import 'package:flutter/material.dart';
 
 class BackNavigator extends StatelessWidget {
-  const BackNavigator({super.key});
+  final String designacao;
+
+  const BackNavigator({
+    super.key,
+    required this.designacao,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +29,10 @@ class BackNavigator extends StatelessWidget {
                 (states) => AppColors.white,
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              NavigationUtil.direcionarPara(
+                  context, '/home-academico', designacao);
+            },
             icon: const Icon(
               Icons.arrow_back,
               color: AppColors.mainYellow,

@@ -8,7 +8,11 @@ import 'package:app_unicv/widgets/space.dart';
 import 'package:flutter/material.dart';
 
 class TelaCadastroTurma extends StatefulWidget {
-  const TelaCadastroTurma({super.key});
+  final String designacao;
+  const TelaCadastroTurma({
+    super.key,
+    required this.designacao,
+  });
 
   @override
   State<TelaCadastroTurma> createState() => _TelaCadastroTurmaState();
@@ -16,6 +20,11 @@ class TelaCadastroTurma extends StatefulWidget {
 
 class _TelaCadastroTurmaState extends State<TelaCadastroTurma> {
   final _keyForm = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   List<String> cursos = [
     'Análise e desenvolvimento de Sistemas',
@@ -35,7 +44,9 @@ class _TelaCadastroTurmaState extends State<TelaCadastroTurma> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                const BackNavigator(),
+                BackNavigator(
+                  designacao: widget.designacao,
+                ),
                 const SpaceWidget(spaceWidth: 0, spaceHeight: 50),
                 Form(
                   key: _keyForm,

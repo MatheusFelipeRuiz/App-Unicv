@@ -2,6 +2,7 @@ import 'package:app_unicv/common/colors.dart';
 import 'package:flutter/material.dart';
 
 class FloatButton extends StatefulWidget {
+  final String heroTag;
   final VoidCallback onPressed;
   final IconData icon;
   final Color iconColor;
@@ -11,6 +12,7 @@ class FloatButton extends StatefulWidget {
   const FloatButton({
     super.key,
     required this.onPressed,
+    required this.heroTag,
     required this.buttonColor,
     required this.icon,
     required this.iconColor,
@@ -25,6 +27,7 @@ class _FloatButtonState extends State<FloatButton> {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      heroTag: widget.heroTag,
       isExtended: true,
       shape: CircleBorder(
         side: BorderSide(
