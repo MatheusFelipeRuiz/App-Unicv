@@ -17,6 +17,7 @@ import 'package:app_unicv/utils/validators/text.dart';
 import 'package:app_unicv/widgets/form/button.dart';
 import 'package:app_unicv/widgets/form/dropdown.dart';
 import 'package:app_unicv/widgets/form/text_input.dart';
+import 'package:app_unicv/widgets/nav/back_navigator.dart';
 import 'package:app_unicv/widgets/space.dart';
 import 'package:app_unicv/widgets/spinner.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -160,6 +161,14 @@ class _TelaCadastroAcademicoState extends State<TelaCadastroAcademico> {
           child: Center(
               child: Column(
             children: [
+              BackNavigator(
+                onPressed: () {
+                  NavigationUtil.direcionarPara(
+                    context,
+                    '/',
+                  );
+                },
+              ),
               Container(
                 padding: const EdgeInsets.only(top: 20),
                 width: 200,
@@ -252,7 +261,6 @@ class _TelaCadastroAcademicoState extends State<TelaCadastroAcademico> {
                   ),
                 ),
               ),
-              const SpaceWidget(spaceWidth: 0, spaceHeight: 14),
             ],
           )),
         ),

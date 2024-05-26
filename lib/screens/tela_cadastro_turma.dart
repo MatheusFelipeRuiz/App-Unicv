@@ -95,8 +95,21 @@ class _TelaCadastroTurmaState extends State<TelaCadastroTurma> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                BackNavigator(
-                  academico: widget.academico,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    BackNavigator(
+                      onPressed: () {
+                        NavigationUtil.direcionarPara(
+                            context, '/home-academico', widget.academico);
+                      },
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 20),
+                      width: 200,
+                      child: Image.asset('img/logo-unicv.png'),
+                    ),
+                  ],
                 ),
                 const SpaceWidget(spaceWidth: 0, spaceHeight: 50),
                 Form(

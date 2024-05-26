@@ -1,14 +1,12 @@
 import 'package:app_unicv/common/colors.dart';
-import 'package:app_unicv/models/academico.dart';
-import 'package:app_unicv/utils/navigation_helper.dart';
 import 'package:flutter/material.dart';
 
 class BackNavigator extends StatelessWidget {
-  final Academico academico;
+  final VoidCallback? onPressed;
 
   const BackNavigator({
     super.key,
-    required this.academico,
+    required this.onPressed,
   });
 
   @override
@@ -30,20 +28,12 @@ class BackNavigator extends StatelessWidget {
                 (states) => AppColors.white,
               ),
             ),
-            onPressed: () {
-              NavigationUtil.direcionarPara(
-                  context, '/home-academico', academico);
-            },
+            onPressed: onPressed,
             icon: const Icon(
               Icons.arrow_back,
               color: AppColors.mainYellow,
             ),
           ),
-        ),
-        Container(
-          padding: const EdgeInsets.only(top: 20),
-          width: 200,
-          child: Image.asset('img/logo-unicv.png'),
         ),
       ],
     );

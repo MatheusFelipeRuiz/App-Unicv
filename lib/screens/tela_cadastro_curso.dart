@@ -64,38 +64,55 @@ class _TelaCadastroCursoState extends State<TelaCadastroCurso> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                BackNavigator(
-                  academico: widget.academico,
-                ),
-                const SpaceWidget(spaceWidth: 0, spaceHeight: 50),
-                Form(
-                  key: _keyForm,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextInput(
-                        label: 'Curso',
-                        controller: _cursoController,
-                        tipoTeclado: TextInputType.text,
-                        validator: (value) => TextValidator.validate(value,
-                            minLength: 3, maxLength: 30),
+        child: Column(
+          children: [
+            Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        BackNavigator(
+                          onPressed: () {
+                            NavigationUtil.direcionarPara(
+                                context, '/home-academico', widget.academico);
+                          },
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(top: 20),
+                          width: 200,
+                          child: Image.asset('img/logo-unicv.png'),
+                        ),
+                      ],
+                    ),
+                    const SpaceWidget(spaceWidth: 0, spaceHeight: 50),
+                    Form(
+                      key: _keyForm,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextInput(
+                            label: 'Curso',
+                            controller: _cursoController,
+                            tipoTeclado: TextInputType.text,
+                            validator: (value) => TextValidator.validate(value,
+                                minLength: 3, maxLength: 30),
+                          ),
+                          const SpaceWidget(spaceWidth: 0, spaceHeight: 500),
+                          if (_isLoading!) ...{
+                            const SpinnerProgressIndicator(),
+                          } else ...{
+                            MainButton(
+                                label: 'Cadastrar', onPressed: _cadastrarCurso),
+                          }
+                        ],
                       ),
-                      const SpaceWidget(spaceWidth: 0, spaceHeight: 500),
-                      if (_isLoading!) ...{
-                        const SpinnerProgressIndicator(),
-                      } else ...{
-                        MainButton(
-                            label: 'Cadastrar', onPressed: _cadastrarCurso),
-                      }
-                    ],
-                  ),
-                ),
-              ],
-            )),
+                    ),
+                  ],
+                )),
+          ],
+        ),
       ),
     );
   }

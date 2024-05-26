@@ -1,7 +1,6 @@
 import 'package:app_unicv/models/academico.dart';
 import 'package:app_unicv/models/aviso.dart';
 import 'package:app_unicv/models/turma.dart';
-import 'package:app_unicv/screens/tela_home_academico.dart';
 import 'package:app_unicv/services/aviso_service.dart';
 import 'package:app_unicv/services/turma_service.dart';
 import 'package:app_unicv/utils/error_message.dart';
@@ -100,8 +99,21 @@ class _TelaCadastroAvisoState extends State<TelaCadastroAviso> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                BackNavigator(
-                  academico: widget.academico,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    BackNavigator(
+                      onPressed: () {
+                        NavigationUtil.direcionarPara(
+                            context, '/home-academico', widget.academico);
+                      },
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 20),
+                      width: 200,
+                      child: Image.asset('img/logo-unicv.png'),
+                    ),
+                  ],
                 ),
                 const SpaceWidget(spaceWidth: 0, spaceHeight: 50),
                 Form(

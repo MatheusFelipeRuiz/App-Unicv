@@ -1,3 +1,4 @@
+import 'package:app_unicv/common/colors.dart';
 import 'package:app_unicv/models/academico.dart';
 import 'package:app_unicv/services/academico_service.dart';
 import 'package:app_unicv/utils/error_message.dart';
@@ -11,6 +12,7 @@ import 'package:app_unicv/widgets/space.dart';
 import 'package:app_unicv/widgets/spinner.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class TelaLogin extends StatefulWidget {
   const TelaLogin({super.key});
@@ -102,13 +104,49 @@ class _TelaLoginState extends State<TelaLogin> {
                       inputSenha: true,
                       validator: (value) => PasswordValidator.validate(value),
                     ),
-                    const SpaceWidget(spaceWidth: 0, spaceHeight: 50),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.transparent),
+                        elevation: MaterialStateProperty.all(0),
+                      ),
+                      onPressed: () {
+                        NavigationUtil.direcionarPara(context, '/reset-senha');
+                      },
+                      child: const Text(
+                        'Esqueceu sua senha?',
+                        style: TextStyle(color: AppColors.mainYellow),
+                      ),
+                    ),
+                    const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
                     _isLoading
                         ? const SpinnerProgressIndicator()
                         : MainButton(
                             label: 'Entrar',
                             onPressed: _logar,
                           ),
+                    const SpaceWidget(spaceWidth: 0, spaceHeight: 20),
+                    SizedBox(
+                      width: 200,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          NavigationUtil.direcionarPara(
+                              context, '/cadastro-academico');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          textStyle: const TextStyle(
+                            fontSize: 15,
+                          ),
+                          backgroundColor: AppColors.black,
+                          padding: const EdgeInsets.only(top: 5, bottom: 5),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                        child: const Text('Cadastrar',
+                            style: TextStyle(
+                                fontSize: 20, color: AppColors.white)),
+                      ),
+                    ),
                   ],
                 ),
               ),

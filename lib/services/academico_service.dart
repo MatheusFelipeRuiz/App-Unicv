@@ -1,6 +1,7 @@
 import 'package:app_unicv/models/academico.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class AcademicoService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -16,6 +17,19 @@ class AcademicoService {
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code);
     }
+  }
+
+  Future<bool> enviarResetSenhaByEmail(String email) async {
+    try {
+      Academico? academico = await getAcademicoByEmail(email);
+      if (academico != null) {
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+        return true;
+      }
+    } on FirebaseAuth catch (e) {
+      print('Erro ao enviar e-mail de reset: ${e}');
+    }
+    return false;
   }
 
   Future<Academico?> getAcademicoByEmail(String email) async {
