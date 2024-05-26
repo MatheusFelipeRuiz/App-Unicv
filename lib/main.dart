@@ -24,13 +24,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'UniChat',
-      initialRoute: '/home-academico',
+      initialRoute: '/cadastro-aviso',
       routes: {
         '/': (context) => const TelaLogin(),
         '/cadastro-academico': (context) => const TelaCadastroAcademico(),
-        // '/cadastro-aviso': (context) => const TelaCadastroAviso(),
-        // '/cadastro-curso': (context) => const TelaCadastroCurso(),
-        // '/cadastro-turma': (context) => const TelaCadastroTurma(),
+        '/cadastro-aviso': (context) => const TelaCadastroAviso(
+              designacao: 'Coordenador',
+            ),
+        '/cadastro-curso': (context) => const TelaCadastroCurso(
+              designacao: 'Coordenador',
+            ),
+        '/cadastro-turma': (context) => const TelaCadastroTurma(
+              designacao: 'Professor',
+            ),
         '/home-academico': (context) => const TelaHomeAcademico(
               designacao: 'Coordenador',
             ),

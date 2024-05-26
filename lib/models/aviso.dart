@@ -17,11 +17,10 @@ class Aviso {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'titulo': titulo,
       'descricao': descricao,
       'autor': autor,
-      'data': Timestamp.fromDate(dataHora),
+      'dataHora': Timestamp.fromDate(dataHora),
     };
   }
 
