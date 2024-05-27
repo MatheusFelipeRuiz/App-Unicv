@@ -63,52 +63,58 @@ class _TelaResetSenhaState extends State<TelaResetSenha> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BackNavigator(
-              onPressed: () {
-                NavigationUtil.direcionarPara(context, '/');
-              },
-            ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: 30,
-                bottom: 20,
-                left: 20,
-                right: 20,
-              ),
-              child: Image.asset(
-                'img/logo-unicv.png',
-                width: 400,
-                height: 100,
-              ),
-            ),
-            const SpaceWidget(spaceWidth: 0, spaceHeight: 20),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Form(
-                key: _keyForm,
-                child: Column(
-                  children: [
-                    TextInput(
-                      label: 'E-mail',
-                      controller: _emailController,
-                      tipoTeclado: TextInputType.emailAddress,
-                      validator: (value) => EmailValidator.validate(value),
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  BackNavigator(
+                    onPressed: () {
+                      NavigationUtil.direcionarPara(context, '/');
+                    },
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(
+                      top: 30,
+                      bottom: 20,
+                      left: 20,
+                      right: 20,
                     ),
-                    const SpaceWidget(spaceWidth: 0, spaceHeight: 30),
-                    if (_isLoading) ...{
-                      const SpinnerProgressIndicator(),
-                    } else ...{
-                      MainButton(label: 'Enviar', onPressed: _enviar),
-                    }
-                  ],
+                    child: Image.asset(
+                      'img/logo-unicv.png',
+                      width: 300,
+                      height: 100,
+                    ),
+                  ),
+                ],
+              ),
+              const SpaceWidget(spaceWidth: 0, spaceHeight: 100),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Form(
+                  key: _keyForm,
+                  child: Column(
+                    children: [
+                      TextInput(
+                        label: 'E-mail',
+                        controller: _emailController,
+                        tipoTeclado: TextInputType.emailAddress,
+                        validator: (value) => EmailValidator.validate(value),
+                      ),
+                      const SpaceWidget(spaceWidth: 0, spaceHeight: 30),
+                      if (_isLoading) ...{
+                        const SpinnerProgressIndicator(),
+                      } else ...{
+                        MainButton(label: 'Enviar', onPressed: _enviar),
+                      }
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
