@@ -52,20 +52,59 @@ class AcademicoService {
     }
   }
 
-  Future<bool> cadastrarAcademico(Academico academico) async {
+  Future<bool> cadastrarAcademico(Academico academico, [User? usuario]) async {
     try {
-      UserCredential userCredential =
-          await _firebaseAuth.createUserWithEmailAndPassword(
-        email: academico.email,
-        password: academico.senha,
-      );
+      if (usuario != null) {
+        print('Cadastrei pelo Google');
+        linkEmailSenha(
+          usuario,
+          academico.email,
+          academico.senha,
+        );
+        await _firestore.collection('academicos').add(academico.toMap());
+      } else {
+        print('Cadastrei normal');
+        UserCredential userCredential =
+            await _firebaseAuth.createUserWithEmailAndPassword(
+          email: academico.email,
+          password: academico.senha,
+        );
+        String uid = userCredential.user!.uid;
+        await _firestore
+            .collection('academicos')
+            .doc(uid)
+            .set(academico.toMap());
+      }
 
-      String uid = userCredential.user!.uid;
-
-      await _firestore.collection('academicos').doc(uid).set(academico.toMap());
       return true;
     } on FirebaseException catch (e) {
       throw FirebaseAuthException(code: e.code);
     }
+  }
+
+  Future<bool> linkEmailSenha(User user, String email, String senha) async {
+    try {
+      AuthCredential credential =
+          EmailAuthProvider.credential(email: email, password: senha);
+
+      await user.linkWithCredential(credential);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> atualizarAcademico(Academico academico) async {
+    try {
+      await _firestore
+          .collection('academicos')
+          .doc(academico.id)
+          .update(academico.toMap());
+      return true;
+    } catch (e) {
+      print("Erro ao atualizar acadêmico: $e");
+    }
+    return false;
   }
 }

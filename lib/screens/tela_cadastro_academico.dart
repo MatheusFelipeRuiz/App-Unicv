@@ -245,7 +245,9 @@ class _TelaCadastroAcademicoState extends State<TelaCadastroAcademico> {
                         label: 'E-mail',
                         controller: _emailController,
                         tipoTeclado: TextInputType.emailAddress,
-                        validator: (value) => EmailValidator.validate(value),
+                        validator: (value) =>
+                            EmailValidator.validaDesignacaoComEmail(
+                                _designacao!, value!),
                       ),
                       const SpaceWidget(spaceWidth: 0, spaceHeight: 10),
                       TextInput(

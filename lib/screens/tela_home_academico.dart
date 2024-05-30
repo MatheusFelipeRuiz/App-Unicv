@@ -101,7 +101,7 @@ class _TelaHomeAcademicoState extends State<TelaHomeAcademico> {
     return Scaffold(
       body: Column(
         children: [
-          const NavbarHome(),
+          NavbarHome(academico: widget.academico,),
           const SpaceWidget(spaceWidth: 0, spaceHeight: 30),
           Expanded(
             child: Column(

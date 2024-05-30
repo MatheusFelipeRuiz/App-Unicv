@@ -7,6 +7,8 @@ class ErrorMessage {
         return 'Usuário ou senha inválidos. Por favor, verifique seus dados de login.';
       case 'user-not-found':
         return 'Usuário não encontrado. Por favor, verifique seus dados de login.';
+      case 'e-mail-invalid':
+        return 'E-mail informado não válido, por favor insira seu e-mail acadêmico';
       default:
         return 'Erro:  $codigo - Contate o suporte da UNICV no número (99) 9999-99999';
     }

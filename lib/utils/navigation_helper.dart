@@ -1,20 +1,28 @@
 import 'package:app_unicv/models/academico.dart';
 import 'package:app_unicv/screens/tela_cadastro_academico.dart';
+import 'package:app_unicv/screens/tela_cadastro_academico_google.dart';
 import 'package:app_unicv/screens/tela_cadastro_aviso.dart';
 import 'package:app_unicv/screens/tela_cadastro_curso.dart';
 import 'package:app_unicv/screens/tela_cadastro_turma.dart';
 import 'package:app_unicv/screens/tela_home_academico.dart';
 import 'package:app_unicv/screens/tela_login.dart';
 import 'package:app_unicv/screens/tela_reset_senha.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NavigationUtil {
   static void direcionarPara(BuildContext context, String rota,
-      [Academico? academico]) {
+      [Academico? academico, User? usuario]) {
     Widget telaAtual;
     switch (rota) {
       case '/cadastro-academico':
         telaAtual = const TelaCadastroAcademico();
+        break;
+      case '/cadastro-academico-google':
+        telaAtual = TelaCadastroAcademicoGoogle(
+          academico: academico!,
+          usuario: usuario!,
+        );
         break;
       case '/cadastro-aviso':
         telaAtual = TelaCadastroAviso(academico: academico!);

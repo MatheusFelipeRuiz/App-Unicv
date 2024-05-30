@@ -7,6 +7,7 @@ class Academico {
   String? designacao;
   String? curso;
   String? turma;
+  String? foto;
 
   Academico({
     this.id,
@@ -17,6 +18,7 @@ class Academico {
     required this.email,
     required this.senha,
     this.codigo,
+    this.foto,
   });
 
   Map<String, dynamic> toMap() {
@@ -27,6 +29,7 @@ class Academico {
       'curso': curso,
       'turma': turma,
       'codigo': codigo.toString(),
+      'foto': foto,
     };
   }
 
@@ -41,6 +44,7 @@ class Academico {
       email: data['email'],
       senha: '',
       codigo: int.parse(data['codigo']),
+      foto: data['foto'],
     );
   }
 }

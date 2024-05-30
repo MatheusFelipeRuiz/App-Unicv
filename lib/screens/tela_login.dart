@@ -1,6 +1,7 @@
 import 'package:app_unicv/common/colors.dart';
 import 'package:app_unicv/models/academico.dart';
 import 'package:app_unicv/services/academico_service.dart';
+import 'package:app_unicv/services/auth/google_auth.dart';
 import 'package:app_unicv/utils/error_message.dart';
 import 'package:app_unicv/utils/navigation_helper.dart';
 import 'package:app_unicv/utils/snackbar.dart';
@@ -13,6 +14,8 @@ import 'package:app_unicv/widgets/spinner.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_signin_button/button_view.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class TelaLogin extends StatefulWidget {
   const TelaLogin({super.key});
@@ -27,6 +30,29 @@ class _TelaLoginState extends State<TelaLogin> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _senhaController = TextEditingController();
   bool _isLoading = false;
+
+  void _signWithGoogle() async {
+    try {
+      GoogleAuthService googleAuthService = GoogleAuthService();
+      List<dynamic> objetos = await googleAuthService.signInWithGoogle();
+
+      if (objetos.isNotEmpty && objetos.length == 2) {
+        if (objetos[0].toMap().containsKey('turma')) {
+          if (objetos[0].toMap()['turma'] != null) {
+            NavigationUtil.direcionarPara(
+                context, '/home-academico', objetos[0]);
+          } else {
+            NavigationUtil.direcionarPara(
+                context, '/cadastro-academico-google', objetos[0], objetos[1]);
+          }
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      print('Exceção lançada!');
+      SnackBarMessage.showErrorSnackbar(
+          context, ErrorMessage.definirMensagemErro(e.code));
+    }
+  }
 
   void _logar() async {
     if (!_chaveForm.currentState!.validate()) {
@@ -148,6 +174,11 @@ class _TelaLoginState extends State<TelaLogin> {
                               style: TextStyle(
                                   fontSize: 20, color: AppColors.white)),
                         ),
+                      ),
+                      const SpaceWidget(spaceWidth: 0, spaceHeight: 20),
+                      SignInButton(
+                        Buttons.Google,
+                        onPressed: _signWithGoogle,
                       ),
                     ],
                   ),

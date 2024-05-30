@@ -1,9 +1,19 @@
 import 'package:app_unicv/common/colors.dart';
+import 'package:app_unicv/models/academico.dart';
 import 'package:flutter/material.dart';
 
-class NavbarHome extends StatelessWidget {
-  const NavbarHome({super.key});
+class NavbarHome extends StatefulWidget {
+  final Academico academico;
+  const NavbarHome({
+    super.key,
+    required this.academico,
+  });
 
+  @override
+  State<NavbarHome> createState() => _NavbarHomeState();
+}
+
+class _NavbarHomeState extends State<NavbarHome> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,8 +32,8 @@ class NavbarHome extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(30),
           ),
-          child: const CircleAvatar(
-            backgroundImage: AssetImage('img/logo-usuario.jpg'),
+          child: CircleAvatar(
+            backgroundImage: NetworkImage(widget.academico.foto!),
             radius: 20,
           ),
         ),
