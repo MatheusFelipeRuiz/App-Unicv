@@ -62,6 +62,7 @@ class _DropdownState extends State<Dropdown> {
               borderRadius: BorderRadius.zero,
             ),
             contentPadding: EdgeInsets.symmetric(
+              horizontal: 10.0,
               vertical: 10,
             ),
           ),

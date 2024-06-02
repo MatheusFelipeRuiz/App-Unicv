@@ -112,6 +112,8 @@ class _TelaCadastroAcademicoState extends State<TelaCadastroAcademico> {
     String email = _emailController.text;
     String senha = _senhaController.text;
     String nome = _nomeController.text;
+    String foto =
+        'https://th.bing.com/th/id/OIP.6vwZcc33X4K1oOH5puuU_gHaF7?rs=1&pid=ImgDetMain';
     int codigo = _codigoController.text.isNotEmpty && !_isAluno
         ? int.parse(_codigoController.text)
         : 0;
@@ -132,6 +134,7 @@ class _TelaCadastroAcademicoState extends State<TelaCadastroAcademico> {
       nome: nome,
       email: email,
       senha: senha,
+      foto: foto,
     );
 
     try {
