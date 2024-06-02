@@ -44,7 +44,8 @@ class _TelaCadastroAvisoState extends State<TelaCadastroAviso> {
   void _cadastrarAviso() async {
     String titulo = _tituloController.text.trim();
     String descricao = _descricaoController.text.trim();
-
+    String turma = _turma!;
+    
     if (!_keyForm.currentState!.validate()) {
       return;
     }
@@ -58,6 +59,7 @@ class _TelaCadastroAvisoState extends State<TelaCadastroAviso> {
       descricao: descricao,
       autor: widget.academico.nome!,
       dataHora: DateTime.now(),
+      turma: turma,
     );
 
     try {

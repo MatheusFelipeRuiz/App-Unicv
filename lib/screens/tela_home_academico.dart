@@ -29,8 +29,9 @@ class _TelaHomeAcademicoState extends State<TelaHomeAcademico> {
       setState(() {
         _isLoading = true;
       });
+      print(widget.academico.toMap());
       AvisoService avisoService = AvisoService();
-      List<Aviso> avisos = await avisoService.getAvisos();
+      List<Aviso> avisos = await avisoService.getAvisos(widget.academico);
 
       setState(() {
         _avisos.addAll(avisos);
@@ -101,7 +102,9 @@ class _TelaHomeAcademicoState extends State<TelaHomeAcademico> {
     return Scaffold(
       body: Column(
         children: [
-          NavbarHome(academico: widget.academico,),
+          NavbarHome(
+            academico: widget.academico,
+          ),
           const SpaceWidget(spaceWidth: 0, spaceHeight: 30),
           Expanded(
             child: Column(

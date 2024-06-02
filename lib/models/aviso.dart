@@ -4,6 +4,7 @@ class Aviso {
   String? id;
   String autor;
   String descricao;
+  String turma;
   String titulo;
   DateTime dataHora;
 
@@ -12,6 +13,7 @@ class Aviso {
     required this.titulo,
     required this.descricao,
     required this.autor,
+    required this.turma,
     required this.dataHora,
   });
 
@@ -21,6 +23,7 @@ class Aviso {
       'descricao': descricao,
       'autor': autor,
       'dataHora': Timestamp.fromDate(dataHora),
+      'turma': turma,
     };
   }
 
@@ -32,6 +35,7 @@ class Aviso {
       descricao: data['descricao'],
       autor: data['autor'],
       dataHora: (data['dataHora'] as Timestamp).toDate(),
+      turma: data['turma'],
     );
   }
 }
