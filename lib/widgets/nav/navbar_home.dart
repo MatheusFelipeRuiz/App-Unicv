@@ -1,5 +1,6 @@
 import 'package:app_unicv/common/colors.dart';
 import 'package:app_unicv/models/academico.dart';
+import 'package:app_unicv/utils/navigation_helper.dart';
 import 'package:flutter/material.dart';
 
 class NavbarHome extends StatefulWidget {
@@ -32,9 +33,14 @@ class _NavbarHomeState extends State<NavbarHome> {
             ),
             borderRadius: BorderRadius.circular(30),
           ),
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(widget.academico.foto!),
-            radius: 20,
+          child: InkWell(
+            onTap: () {
+              NavigationUtil.direcionarPara(context, '/info-academico', widget.academico);
+            },
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(widget.academico.foto!),
+              radius: 20,
+            ),
           ),
         ),
       ],
