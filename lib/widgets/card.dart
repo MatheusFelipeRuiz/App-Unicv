@@ -42,16 +42,18 @@ class _CardHomeState extends State<CardHome> {
             children: [
               Column(
                 children: [
-                  Text(
-                    widget.titulo,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      color: AppColors.green,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 20,
+                  Center(
+                    child: Text(
+                      widget.titulo,
+                      maxLines: 1,
+                      style: const TextStyle(
+                        color: AppColors.green,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 20,
+                      ),
+                      textAlign: TextAlign.justify,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    textAlign: TextAlign.left,
-                    overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     widget.descricao,
